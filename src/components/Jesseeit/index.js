@@ -53,11 +53,11 @@ const Jesseeit = () => {
 					let speed;
 
 					if (index === 0) {
-						speed = 800;
+						speed = 600;
 					} else if (index < 4) {
-						speed = 500;
-					} else if (index < 9) {
 						speed = 300;
+					} else if (index < 9) {
+						speed = 200;
 					} else {
 						speed = 150;
 					}
