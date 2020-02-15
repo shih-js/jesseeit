@@ -24,3 +24,10 @@ words.map(word => {
 console.log(words.length);
 
 // document.querySelector('body').prepend(`${selectedText}`);
+
+document.onkeypress = e => {
+	const { key } = e;
+	if (key === 'c' || key === 'C') {
+		console.log('TRDFGDFGDG');
+	}
+};

@@ -3,12 +3,12 @@
 	"description": "Press 'C' to Jesseeit.",
 	"version": "1.0",
 	"manifest_version": 2,
-	"background": {
-		"scripts": ["src/background.js"],
-		"persistent": true
-	},
-	"permissions": ["contextMenus", "activeTab"],
-	"browser_action": {
-		"default_title": "Press 'C' to Jesseeit."
-	}
+	"content_scripts": [
+		{
+			"matches": ["*://*/*"],
+			"css": [],
+			"js": ["build/main.js"]
+		}
+	],
+	"permissions": ["contextMenus", "activeTab"]
 }
