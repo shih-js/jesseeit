@@ -35931,13 +35931,23 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const ExpiredStyle = _styledComponents.default.div`
-	position: fixed;
 	top: 0;
 	bottom: 0;
 	z-index: -1;
 	opacity: 0;
 	transform: translate(0, -50vh);
+
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
 	transition: all 200ms ease;
+	/* & * {
+		transition: all 100ms ease;
+	} */
 	&.show {
 		transform: translate(0, 0);
 		opacity: 1;
@@ -35946,34 +35956,65 @@ const ExpiredStyle = _styledComponents.default.div`
 			cursor: none;
 		}
 	}
+	.jesseeit-container {
+		height: 100px;
+		position: absolute;
+		width: 100%;
+		max-width: 600px;
+		/* transform: translate(0px, -10vh); */
+		overflow: overlay;
+		margin-top: 20px;
+		z-index: 2;
+		/* .block-offset {
+			display: block;
+			width: 100%;
+			height: 100px;
+		} */
+		.jesseeit-word {
+			display: inline-block;
+			color: #313031;
+			color: black;
+			font-size: 40px;
+			line-height: 50px;
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+				Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+			opacity: 0.1;
+			padding-right: 0.8ch;
+			z-index: 2;
+			&.reveal {
+				color: white;
+				opacity: 1;
+			}
+			&.revealed {
+				color: white;
+				opacity: 0.5;
+			}
+		}
+	}
+	.flash-word {
+		color: white;
+		font-size: 60px;
+		transform: translate(0px, -10vh);
+		z-index: 4;
+	}
+	.horizon {
+		position: absolute;
+		display: block;
+		border-bottom: 1px solid red;
+		height: 100px;
+		width: 100%;
+		max-width: 600px;
+		opacity: 0.5;
+		transform: translate(0px, -10vh);
+		z-index: 3;
+	}
 	.jesseeit-background {
 		position: fixed;
 		top: 0;
-		background: black;
+		background: #222222;
 		height: 120vh;
 		width: 100vw;
 		z-index: 1;
-	}
-	.jesseeit-container {
-		position: fixed;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		height: 100vh;
-		width: 100vw;
-		z-index: 2;
-		.jesseeit-word {
-			position: absolute;
-			color: white;
-			font-size: 80px;
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-				Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-			opacity: 0;
-			&.reveal {
-				opacity: 1;
-			}
-		}
 	}
 `;
 var _default = ExpiredStyle;
@@ -35997,80 +36038,59 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const Jesseeit = () => {
-  const [selectedText, setSelectedText] = (0, _react.useState)([]); // const getSelectedText = () => {
-  // 	let text = '';
-  // 	if (window.getSelection) {
-  // 		text = window.getSelection().toString();
-  // 	} else if (document.selection && document.selection.type != 'Control') {
-  // 		text = document.selection.createRange().text;
-  // 	}
-  // 	return text;
-  // };
+  const [selectedText, setSelectedText] = (0, _react.useState)('');
+  const bodyEl = document.getElementsByTagName('body')[0];
+  let isActive = false;
 
-  (0, _react.useEffect)(() => {
-    const bodyEl = document.getElementsByTagName('body')[0];
-    let isActive = false;
+  const initializeEffect = e => {
+    const text = e.target.innerText;
+    const words = text.replace(/\n/g, ' ').split(' ');
+    setSelectedText(words);
+    animateWords();
+  };
 
-    const initializeEffect = e => {
-      const text = e.target.innerText;
-      const words = text.replace(/\n/g, ' ').split(' ');
-      setSelectedText(words);
-      animateWords();
-    };
+  bodyEl.addEventListener('keydown', e => {
+    const {
+      key
+    } = e;
+    if (isActive) return;
 
-    bodyEl.addEventListener('keydown', e => {
-      const {
-        key
-      } = e;
-      if (isActive) return;
+    if (key === 'c') {
+      isActive = true;
+      bodyEl.addEventListener('click', initializeEffect);
+    }
+  });
+  bodyEl.addEventListener('keyup', e => {
+    const {
+      key
+    } = e;
 
-      if (key === 'c') {
-        isActive = true;
-        bodyEl.addEventListener('click', initializeEffect);
-      }
-    });
-    bodyEl.addEventListener('keyup', e => {
-      const {
-        key
-      } = e;
-
-      if (key === 'c' && isActive) {
-        isActive = false;
-        bodyEl.removeEventListener('click', initializeEffect);
-      }
-    });
-  }, []);
+    if (key === 'c' && isActive) {
+      isActive = false;
+      bodyEl.removeEventListener('click', initializeEffect);
+    }
+  });
 
   const initWords = selectedText => {
     return _react.default.createElement(_react.default.Fragment, null, selectedText.map((word, index) => {
       let speed;
-      {
-        /* let offset;
-        const wordLength = word.length; */
-      }
 
       if (index === 0) {
-        speed = 500;
+        speed = 400;
       } else if (index < 4) {
         speed = 300;
       } else if (index < 9) {
         speed = 200;
       } else {
-        speed = 150;
+        // 60,000 / 150 = 400wpm
+        // 60,000 / 120 = 500wpm
+        // 60,000 / 100 = 600wpm
+        speed = 150; // speed = 5000;
       }
 
       const pattern = new RegExp(/\.$/);
       const lastWord = pattern.test(word);
-      if (lastWord) speed = 500;
-      {
-        /* if (wordLength <= 10) {
-        offset = 0;
-        } else if (wordLength < 15) {
-        offset = 1;
-        } else {
-        offset = 2;
-        } */
-      }
+      if (lastWord) speed = 300;
       return _react.default.createElement("div", {
         className: "jesseeit-word",
         key: index,
@@ -36084,17 +36104,24 @@ const Jesseeit = () => {
   };
 
   const animateWords = async () => {
-    // todo: adjust animation timing.
-    // pause for 1000ms after each sentence.
     const words = document.querySelectorAll('.jesseeit-word');
+    const flashWord = document.querySelector('.flash-word');
 
-    for (const word of words) {
+    for (const [index, word] of words.entries()) {
       const speed = +word.dataset.speed;
+      word.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest'
+      });
       word.classList.add('reveal');
+      flashWord.innerText = word.innerText;
       await timeOut(speed);
+      word.classList.add('revealed');
       word.classList.remove('reveal');
     }
 
+    await timeOut(2000);
     setSelectedText('');
   };
 
@@ -36104,6 +36131,10 @@ const Jesseeit = () => {
       setSelectedText('');
     }
   }, _react.default.createElement("div", {
+    className: "flash-word"
+  }), _react.default.createElement("div", {
+    className: "horizon"
+  }), _react.default.createElement("div", {
     className: "jesseeit-container"
   }, selectedText ? initWords(selectedText) : null), _react.default.createElement("div", {
     className: "jesseeit-background"
@@ -36156,7 +36187,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57381" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58730" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
