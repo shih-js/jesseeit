@@ -1,9 +1,9 @@
 {
 	"name": "jesseeit",
-	"description": "A chrome extension that allows users to quickly speed read any block of text by holding down the 'c' key.",
+	"description": "A chrome extension that allows users to quickly speed read by holding down the 'c' key and clicking any block of text on screen.",
 	"homepage": "https://jesseeit.com",
 	"baseUrl": "https://jesseeit.com",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"private": true,
 	"main": "src/index.js",
 	"dependencies": {

@@ -36,7 +36,7 @@ const ExpiredStyle = styled.div`
 		.jesseeit-word {
 			position: absolute;
 			color: white;
-			font-size: 120px;
+			font-size: 80px;
 			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
 				Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 			opacity: 0;

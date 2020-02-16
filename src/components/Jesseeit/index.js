@@ -51,9 +51,13 @@ const Jesseeit = () => {
 			<>
 				{selectedText.map((word, index) => {
 					let speed;
+					{
+						/* let offset;
+					const wordLength = word.length; */
+					}
 
 					if (index === 0) {
-						speed = 600;
+						speed = 500;
 					} else if (index < 4) {
 						speed = 300;
 					} else if (index < 9) {
@@ -62,8 +66,24 @@ const Jesseeit = () => {
 						speed = 150;
 					}
 
+					const pattern = new RegExp(/\.$/);
+					const lastWord = pattern.test(word);
+
+					if (lastWord) speed = 500;
+
+					{
+						/* if (wordLength <= 10) {
+						offset = 0;
+					} else if (wordLength < 15) {
+						offset = 1;
+					} else {
+						offset = 2;
+					} */
+					}
+
 					return (
 						<div className="jesseeit-word" key={index} data-speed={speed}>
+							{/* style={{ transform: `translate(${offset}ch, 0)` }} */}
 							{word}
 						</div>
 					);
@@ -79,7 +99,6 @@ const Jesseeit = () => {
 	const animateWords = async () => {
 		// todo: adjust animation timing.
 		// pause for 1000ms after each sentence.
-
 		const words = document.querySelectorAll('.jesseeit-word');
 
 		for (const word of words) {

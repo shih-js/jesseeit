@@ -35966,7 +35966,7 @@ const ExpiredStyle = _styledComponents.default.div`
 		.jesseeit-word {
 			position: absolute;
 			color: white;
-			font-size: 120px;
+			font-size: 80px;
 			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
 				Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 			opacity: 0;
@@ -36044,17 +36044,33 @@ const Jesseeit = () => {
   const initWords = selectedText => {
     return _react.default.createElement(_react.default.Fragment, null, selectedText.map((word, index) => {
       let speed;
+      {
+        /* let offset;
+        const wordLength = word.length; */
+      }
 
       if (index === 0) {
-        speed = 800;
-      } else if (index < 4) {
         speed = 500;
-      } else if (index < 9) {
+      } else if (index < 4) {
         speed = 300;
+      } else if (index < 9) {
+        speed = 200;
       } else {
         speed = 150;
       }
 
+      const pattern = new RegExp(/\.$/);
+      const lastWord = pattern.test(word);
+      if (lastWord) speed = 500;
+      {
+        /* if (wordLength <= 10) {
+        offset = 0;
+        } else if (wordLength < 15) {
+        offset = 1;
+        } else {
+        offset = 2;
+        } */
+      }
       return _react.default.createElement("div", {
         className: "jesseeit-word",
         key: index,
@@ -36140,7 +36156,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52706" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57381" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,6 +1,7 @@
+.cache/
+.jesseeit/
 node_modules/
 *.env
 *.lock
 *.notes
-.jesseeit/
 _hidden*
