@@ -1,6 +1,6 @@
 {
 	"name": "Jesseeit",
-	"description": "Press 'C' to Jesseeit.",
+	"description": "Press and hold the 'C' key, then click any block of text to Jesseeit.",
 	"version": "1.0",
 	"manifest_version": 2,
 	"content_scripts": [
@@ -10,5 +10,11 @@
 			"js": ["build/main.js"]
 		}
 	],
-	"permissions": ["contextMenus", "activeTab"]
+	"permissions": ["contextMenus", "activeTab"],
+	"icons": {
+		"16": "src/images/jesseeit-16.png",
+		"48": "src/images/jesseeit-48.png",
+		"128": "src/images/jesseeit-128.png",
+		"256": "src/images/jesseeit-128.png"
+	}
 }

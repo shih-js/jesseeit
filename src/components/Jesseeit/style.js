@@ -5,7 +5,7 @@ const ExpiredStyle = styled.div`
 	bottom: 0;
 	z-index: -1;
 	opacity: 0;
-	transform: translate(0, -50vh);
+	transform: translate3d(0, -50vh, 0);
 
 	position: fixed;
 	display: flex;
@@ -19,7 +19,7 @@ const ExpiredStyle = styled.div`
 		transition: all 100ms ease;
 	} */
 	&.show {
-		transform: translate(0, 0);
+		transform: translate3d(0, -60px, 0);
 		opacity: 1;
 		z-index: 5000;
 		&:hover {
@@ -27,13 +27,13 @@ const ExpiredStyle = styled.div`
 		}
 	}
 	.jesseeit-container {
-		height: 100px;
+		height: 80px;
 		position: absolute;
 		width: 100%;
 		max-width: 600px;
-		/* transform: translate(0px, -10vh); */
+		/* transform: translate3d(0px, -10vh); , 0*/
 		overflow: overlay;
-		margin-top: 20px;
+		/* margin-top: 20px; */
 		z-index: 2;
 		/* .block-offset {
 			display: block;
@@ -41,49 +41,53 @@ const ExpiredStyle = styled.div`
 			height: 100px;
 		} */
 		.jesseeit-word {
-			display: inline-block;
-			color: #313031;
-			color: black;
-			font-size: 40px;
-			line-height: 50px;
+			display: block;
+			position: absolute;
+			/* color: #313031; */
+			color: white;
+			font-size: 60px;
+			line-height: 60px;
 			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
 				Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-			opacity: 0.1;
-			padding-right: 0.8ch;
+			opacity: 0;
+			padding: 0;
+			text-align: center;
+			width: 100%;
 			z-index: 2;
 			&.reveal {
-				color: white;
+				/* color: white; */
 				opacity: 1;
 			}
-			&.revealed {
+			/* &.revealed {
 				color: white;
-				opacity: 0.5;
-			}
+				opacity: 1;
+			} */
 		}
 	}
-	.flash-word {
+	/* .flash-word {
 		color: white;
 		font-size: 60px;
-		transform: translate(0px, -10vh);
+		transform: translate3d(0px, -10vh, 0);
 		z-index: 4;
-	}
+	} */
 	.horizon {
 		position: absolute;
 		display: block;
 		border-bottom: 1px solid red;
-		height: 100px;
+		height: 80px;
 		width: 100%;
 		max-width: 600px;
-		opacity: 0.5;
-		transform: translate(0px, -10vh);
+		opacity: 0.2;
 		z-index: 3;
 	}
 	.jesseeit-background {
 		position: fixed;
 		top: 0;
+		left: 0;
+		right: 0;
 		background: #222222;
-		height: 120vh;
-		width: 100vw;
+		height: 150vh;
+		width: 150vw;
 		z-index: 1;
 	}
 `;

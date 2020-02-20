@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import JesseeitStyle from './style';
 
 const Jesseeit = () => {
@@ -51,13 +51,12 @@ const Jesseeit = () => {
 						// 60,000 / 120 = 500wpm
 						// 60,000 / 100 = 600wpm
 						speed = 150;
-						// speed = 5000;
 					}
 
-					const pattern = new RegExp(/\.$/);
+					const pattern = new RegExp(/(\?|\.)$/);
 					const lastWord = pattern.test(word);
 
-					if (lastWord) speed = 300;
+					if (lastWord) speed = 400;
 
 					return (
 						<div className="jesseeit-word" key={index} data-speed={speed}>
@@ -75,22 +74,20 @@ const Jesseeit = () => {
 
 	const animateWords = async () => {
 		const words = document.querySelectorAll('.jesseeit-word');
-		const flashWord = document.querySelector('.flash-word');
+		// const flashWord = document.querySelector('.flash-word');
 
 		for (const [index, word] of words.entries()) {
 			const speed = +word.dataset.speed;
 
-			word.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+			// word.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 			word.classList.add('reveal');
-
-			flashWord.innerText = word.innerText;
+			// flashWord.innerText = word.innerText;
 
 			await timeOut(speed);
-			word.classList.add('revealed');
+			// word.classList.add('revealed');
 			word.classList.remove('reveal');
 		}
-
-		await timeOut(2000);
+		await timeOut(500);
 		setSelectedText('');
 	};
 
@@ -101,12 +98,12 @@ const Jesseeit = () => {
 				setSelectedText('');
 			}}
 		>
-			<div className="flash-word"></div>
-			<div className="horizon"></div>
 			<div className="jesseeit-container">
 				{/* <div className="block-offset"></div> */}
 				{selectedText ? initWords(selectedText) : null}
 			</div>
+			<div className="horizon"></div>
+			{/* <div className="flash-word"></div> */}
 			<div className="jesseeit-background"></div>
 		</JesseeitStyle>
 	);

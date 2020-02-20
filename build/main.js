@@ -35935,7 +35935,7 @@ const ExpiredStyle = _styledComponents.default.div`
 	bottom: 0;
 	z-index: -1;
 	opacity: 0;
-	transform: translate(0, -50vh);
+	transform: translate3d(0, -50vh, 0);
 
 	position: fixed;
 	display: flex;
@@ -35949,7 +35949,7 @@ const ExpiredStyle = _styledComponents.default.div`
 		transition: all 100ms ease;
 	} */
 	&.show {
-		transform: translate(0, 0);
+		transform: translate3d(0, -60px, 0);
 		opacity: 1;
 		z-index: 5000;
 		&:hover {
@@ -35957,13 +35957,13 @@ const ExpiredStyle = _styledComponents.default.div`
 		}
 	}
 	.jesseeit-container {
-		height: 100px;
+		height: 80px;
 		position: absolute;
 		width: 100%;
 		max-width: 600px;
-		/* transform: translate(0px, -10vh); */
+		/* transform: translate3d(0px, -10vh); , 0*/
 		overflow: overlay;
-		margin-top: 20px;
+		/* margin-top: 20px; */
 		z-index: 2;
 		/* .block-offset {
 			display: block;
@@ -35971,49 +35971,53 @@ const ExpiredStyle = _styledComponents.default.div`
 			height: 100px;
 		} */
 		.jesseeit-word {
-			display: inline-block;
-			color: #313031;
-			color: black;
-			font-size: 40px;
-			line-height: 50px;
+			display: block;
+			position: absolute;
+			/* color: #313031; */
+			color: white;
+			font-size: 60px;
+			line-height: 60px;
 			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
 				Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-			opacity: 0.1;
-			padding-right: 0.8ch;
+			opacity: 0;
+			padding: 0;
+			text-align: center;
+			width: 100%;
 			z-index: 2;
 			&.reveal {
-				color: white;
+				/* color: white; */
 				opacity: 1;
 			}
-			&.revealed {
+			/* &.revealed {
 				color: white;
-				opacity: 0.5;
-			}
+				opacity: 1;
+			} */
 		}
 	}
-	.flash-word {
+	/* .flash-word {
 		color: white;
 		font-size: 60px;
-		transform: translate(0px, -10vh);
+		transform: translate3d(0px, -10vh, 0);
 		z-index: 4;
-	}
+	} */
 	.horizon {
 		position: absolute;
 		display: block;
 		border-bottom: 1px solid red;
-		height: 100px;
+		height: 80px;
 		width: 100%;
 		max-width: 600px;
-		opacity: 0.5;
-		transform: translate(0px, -10vh);
+		opacity: 0.2;
 		z-index: 3;
 	}
 	.jesseeit-background {
 		position: fixed;
 		top: 0;
+		left: 0;
+		right: 0;
 		background: #222222;
-		height: 120vh;
-		width: 100vw;
+		height: 150vh;
+		width: 150vw;
 		z-index: 1;
 	}
 `;
@@ -36085,12 +36089,12 @@ const Jesseeit = () => {
         // 60,000 / 150 = 400wpm
         // 60,000 / 120 = 500wpm
         // 60,000 / 100 = 600wpm
-        speed = 150; // speed = 5000;
+        speed = 150;
       }
 
-      const pattern = new RegExp(/\.$/);
+      const pattern = new RegExp(/(\?|\.)$/);
       const lastWord = pattern.test(word);
-      if (lastWord) speed = 300;
+      if (lastWord) speed = 400;
       return _react.default.createElement("div", {
         className: "jesseeit-word",
         key: index,
@@ -36104,24 +36108,19 @@ const Jesseeit = () => {
   };
 
   const animateWords = async () => {
-    const words = document.querySelectorAll('.jesseeit-word');
-    const flashWord = document.querySelector('.flash-word');
+    const words = document.querySelectorAll('.jesseeit-word'); // const flashWord = document.querySelector('.flash-word');
 
     for (const [index, word] of words.entries()) {
-      const speed = +word.dataset.speed;
-      word.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-        inline: 'nearest'
-      });
-      word.classList.add('reveal');
-      flashWord.innerText = word.innerText;
-      await timeOut(speed);
-      word.classList.add('revealed');
+      const speed = +word.dataset.speed; // word.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+
+      word.classList.add('reveal'); // flashWord.innerText = word.innerText;
+
+      await timeOut(speed); // word.classList.add('revealed');
+
       word.classList.remove('reveal');
     }
 
-    await timeOut(2000);
+    await timeOut(500);
     setSelectedText('');
   };
 
@@ -36131,12 +36130,10 @@ const Jesseeit = () => {
       setSelectedText('');
     }
   }, _react.default.createElement("div", {
-    className: "flash-word"
-  }), _react.default.createElement("div", {
-    className: "horizon"
-  }), _react.default.createElement("div", {
     className: "jesseeit-container"
   }, selectedText ? initWords(selectedText) : null), _react.default.createElement("div", {
+    className: "horizon"
+  }), _react.default.createElement("div", {
     className: "jesseeit-background"
   }));
 };
@@ -36159,209 +36156,5 @@ anchor.id = 'jesseeit';
 document.body.insertBefore(anchor, document.body.childNodes[0]);
 
 _reactDom.default.render(_react.default.createElement(_Jesseeit.default, null), document.getElementById('jesseeit'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./components/Jesseeit":"components/Jesseeit/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
-var global = arguments[3];
-var OVERLAY_ID = '__parcel__error__overlay__';
-var OldModule = module.bundle.Module;
-
-function Module(moduleName) {
-  OldModule.call(this, moduleName);
-  this.hot = {
-    data: module.bundle.hotData,
-    _acceptCallbacks: [],
-    _disposeCallbacks: [],
-    accept: function (fn) {
-      this._acceptCallbacks.push(fn || function () {});
-    },
-    dispose: function (fn) {
-      this._disposeCallbacks.push(fn);
-    }
-  };
-  module.bundle.hotData = null;
-}
-
-module.bundle.Module = Module;
-var checkedAssets, assetsToAccept;
-var parent = module.bundle.parent;
-
-if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = "" || location.hostname;
-  var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58730" + '/');
-
-  ws.onmessage = function (event) {
-    checkedAssets = {};
-    assetsToAccept = [];
-    var data = JSON.parse(event.data);
-
-    if (data.type === 'update') {
-      var handled = false;
-      data.assets.forEach(function (asset) {
-        if (!asset.isNew) {
-          var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
-
-          if (didAccept) {
-            handled = true;
-          }
-        }
-      }); // Enable HMR for CSS by default.
-
-      handled = handled || data.assets.every(function (asset) {
-        return asset.type === 'css' && asset.generated.js;
-      });
-
-      if (handled) {
-        console.clear();
-        data.assets.forEach(function (asset) {
-          hmrApply(global.parcelRequire, asset);
-        });
-        assetsToAccept.forEach(function (v) {
-          hmrAcceptRun(v[0], v[1]);
-        });
-      } else if (location.reload) {
-        // `location` global exists in a web worker context but lacks `.reload()` function.
-        location.reload();
-      }
-    }
-
-    if (data.type === 'reload') {
-      ws.close();
-
-      ws.onclose = function () {
-        location.reload();
-      };
-    }
-
-    if (data.type === 'error-resolved') {
-      console.log('[parcel] ✨ Error resolved');
-      removeErrorOverlay();
-    }
-
-    if (data.type === 'error') {
-      console.error('[parcel] 🚨  ' + data.error.message + '\n' + data.error.stack);
-      removeErrorOverlay();
-      var overlay = createErrorOverlay(data);
-      document.body.appendChild(overlay);
-    }
-  };
-}
-
-function removeErrorOverlay() {
-  var overlay = document.getElementById(OVERLAY_ID);
-
-  if (overlay) {
-    overlay.remove();
-  }
-}
-
-function createErrorOverlay(data) {
-  var overlay = document.createElement('div');
-  overlay.id = OVERLAY_ID; // html encode message and stack trace
-
-  var message = document.createElement('div');
-  var stackTrace = document.createElement('pre');
-  message.innerText = data.error.message;
-  stackTrace.innerText = data.error.stack;
-  overlay.innerHTML = '<div style="background: black; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; opacity: 0.85; font-family: Menlo, Consolas, monospace; z-index: 9999;">' + '<span style="background: red; padding: 2px 4px; border-radius: 2px;">ERROR</span>' + '<span style="top: 2px; margin-left: 5px; position: relative;">🚨</span>' + '<div style="font-size: 18px; font-weight: bold; margin-top: 20px;">' + message.innerHTML + '</div>' + '<pre>' + stackTrace.innerHTML + '</pre>' + '</div>';
-  return overlay;
-}
-
-function getParents(bundle, id) {
-  var modules = bundle.modules;
-
-  if (!modules) {
-    return [];
-  }
-
-  var parents = [];
-  var k, d, dep;
-
-  for (k in modules) {
-    for (d in modules[k][1]) {
-      dep = modules[k][1][d];
-
-      if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) {
-        parents.push(k);
-      }
-    }
-  }
-
-  if (bundle.parent) {
-    parents = parents.concat(getParents(bundle.parent, id));
-  }
-
-  return parents;
-}
-
-function hmrApply(bundle, asset) {
-  var modules = bundle.modules;
-
-  if (!modules) {
-    return;
-  }
-
-  if (modules[asset.id] || !bundle.parent) {
-    var fn = new Function('require', 'module', 'exports', asset.generated.js);
-    asset.isNew = !modules[asset.id];
-    modules[asset.id] = [fn, asset.deps];
-  } else if (bundle.parent) {
-    hmrApply(bundle.parent, asset);
-  }
-}
-
-function hmrAcceptCheck(bundle, id) {
-  var modules = bundle.modules;
-
-  if (!modules) {
-    return;
-  }
-
-  if (!modules[id] && bundle.parent) {
-    return hmrAcceptCheck(bundle.parent, id);
-  }
-
-  if (checkedAssets[id]) {
-    return;
-  }
-
-  checkedAssets[id] = true;
-  var cached = bundle.cache[id];
-  assetsToAccept.push([bundle, id]);
-
-  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-    return true;
-  }
-
-  return getParents(global.parcelRequire, id).some(function (id) {
-    return hmrAcceptCheck(global.parcelRequire, id);
-  });
-}
-
-function hmrAcceptRun(bundle, id) {
-  var cached = bundle.cache[id];
-  bundle.hotData = {};
-
-  if (cached) {
-    cached.hot.data = bundle.hotData;
-  }
-
-  if (cached && cached.hot && cached.hot._disposeCallbacks.length) {
-    cached.hot._disposeCallbacks.forEach(function (cb) {
-      cb(bundle.hotData);
-    });
-  }
-
-  delete bundle.cache[id];
-  bundle(id);
-  cached = bundle.cache[id];
-
-  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-    cached.hot._acceptCallbacks.forEach(function (cb) {
-      cb();
-    });
-
-    return true;
-  }
-}
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./components/Jesseeit":"components/Jesseeit/index.js"}]},{},["index.js"], null)
 //# sourceMappingURL=/main.js.map

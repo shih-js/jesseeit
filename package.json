@@ -13,9 +13,9 @@
 		"styled-components": "^4.4.1"
 	},
 	"scripts": {
-		"build": "parcel build src/index.js -d build/ -o main.js",
-		"dev": "parcel watch src/index.js -d build/ -o main.js",
-		"watch": "parcel watch src/index.js -d build/ -o main.js"
+		"build": "parcel build src/index.js -d build/ -o main.js --no-hmr",
+		"dev": "parcel watch src/index.js -d build/ -o main.js --no-hmr",
+		"watch": "parcel watch src/index.js -d build/ -o main.js --no-hmr"
 	},
 	"repository": {
 		"type": "git",
